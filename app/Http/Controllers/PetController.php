@@ -11,7 +11,7 @@ class PetController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Pet::query();
+        $query = Pet::where('archived', false);
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -39,9 +39,8 @@ class PetController extends Controller
             $query->where('adopted', $request->adopted);
         }
 
-        $pets = $query->get();
-
-        return view('admin.pets', compact('pets'));
+        $pets = $query->paginate(10); 
+    return view('admin.pets', compact('pets'));
     }
 
     public function create()
@@ -108,11 +107,21 @@ class PetController extends Controller
         return redirect()->route('pets.index')->with('success', 'Pet updated successfully!');
     }
 
-    public function destroy($id)
+    public function archive(Pet $pet)
     {
-        $pet = Pet::findOrFail($id);
-        $pet->delete();
+        $pet->update(['archived' => true]);
+        return redirect()->route('admin.pets-archived')->with('success', 'Pet archived successfully.');
+    }
 
-        return redirect()->route('pets.index')->with('success', 'Pet deleted successfully!');
+    public function archived()
+    {
+        $pets = Pet::where('archived', true)->get();
+        return view('admin.pets-archived', compact('pets'));
+    }
+
+    public function restore(Pet $pet)
+    {
+        $pet->update(['archived' => false]);
+        return redirect()->route('admin.pets-archived')->with('success', 'Pet restored successfully.');
     }
 }

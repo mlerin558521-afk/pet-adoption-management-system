@@ -3,50 +3,57 @@
         @csrf
 
         <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+        <div style="margin-bottom: 16px;">
+            <label for="name" style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;">Name</label>
+            <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus
+                style="width:100%; padding:10px 14px; border:1.5px solid #e5e7eb; border-radius:8px; font-size:15px; outline:none; transition:border-color 0.2s; background: rgba(255,255,255,0.8);"
+                onfocus="this.style.borderColor='#7d4a3f'" onblur="this.style.borderColor='#e5e7eb'">
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+        <!-- Email -->
+        <div style="margin-bottom: 16px;">
+            <label for="email" style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;">Email</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required
+                style="width:100%; padding:10px 14px; border:1.5px solid #e5e7eb; border-radius:8px; font-size:15px; outline:none; transition:border-color 0.2s; background: rgba(255,255,255,0.8);"
+                onfocus="this.style.borderColor='#7d4a3f'" onblur="this.style.borderColor='#e5e7eb'">
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
+        <div style="margin-bottom: 16px;">
+            <label for="password" style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;">Password</label>
+            <input id="password" type="password" name="password" required
+                style="width:100%; padding:10px 14px; border:1.5px solid #e5e7eb; border-radius:8px; font-size:15px; outline:none; transition:border-color 0.2s; background: rgba(255,255,255,0.8);"
+                onfocus="this.style.borderColor='#7d4a3f'" onblur="this.style.borderColor='#e5e7eb'">
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
+        <div style="margin-bottom: 24px;">
+            <label for="password_confirmation" style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;">Confirm Password</label>
+            <input id="password_confirmation" type="password" name="password_confirmation" required
+                style="width:100%; padding:10px 14px; border:1.5px solid #e5e7eb; border-radius:8px; font-size:15px; outline:none; transition:border-color 0.2s; background: rgba(255,255,255,0.8);"
+                onfocus="this.style.borderColor='#7d4a3f'" onblur="this.style.borderColor='#e5e7eb'">
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+        <!-- Actions -->
+        <div style="display:flex; flex-direction:column; gap:12px;">
+            <button type="submit"
+                style="width:100%; padding:12px; background:#7d4a3f; color:white; border:none; border-radius:8px; font-size:15px; font-weight:600; cursor:pointer; transition:background 0.2s;"
+                onmouseover="this.style.background='#5c332b'" onmouseout="this.style.background='#7d4a3f'">
+                Register
+            </button>
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+            <div style="text-align:center;">
+                <a href="{{ route('login') }}"
+                    style="font-size:13px; color:#7d4a3f; text-decoration:none; font-weight:500;"
+                    onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                    Already registered? Sign in
+                </a>
+            </div>
         </div>
+
     </form>
 </x-guest-layout>

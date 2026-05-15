@@ -29,6 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware(AdminMiddleware::class)->group(function () {
         Route::resource('admin/pets', PetController::class);
         Route::resource('users', UserController::class);
+        Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+        Route::patch('/pets/{pet}/archive', [PetController::class, 'archive'])->name('admin.pets-archive');
+        Route::get('/pets-archived', [PetController::class, 'archived'])->name('admin.pets-archived');
+        Route::patch('/pets/{pet}/restore', [PetController::class, 'restore'])->name('admin.pets-restore');
         Route::get('/adoptions', [AdoptionController::class, 'index'])->name('adoptions.index');
         Route::patch('/adoptions/{id}/approve', [AdoptionController::class, 'approve'])->name('adoptions.approve');
         Route::patch('/adoptions/{id}/disapprove', [AdoptionController::class, 'disapprove'])->name('adoptions.disapprove');

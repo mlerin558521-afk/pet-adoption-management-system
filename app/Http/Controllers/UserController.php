@@ -51,4 +51,10 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
+    
+    public function show(User $user)
+    {
+        $adoptions = $user->AdoptionRequests()->with('pet')->latest()->get();
+        return view('admin.user-show', compact('user', 'adoptions'));
+    }
 }

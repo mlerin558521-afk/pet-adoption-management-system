@@ -9,81 +9,97 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 font-sans antialiased">
+<body class="font-sans antialiased" style="background: #f5ede8;">
 
     <div class="min-h-screen flex">
         @if(Auth::user()->role === 'admin')
-            {{-- Admin Sidebar --}}
             @include('layouts.navigation')
         @else
-            {{-- User Sidebar --}}
             @include('layouts.user-navigation')
         @endif
 
         <div class="flex-1 min-h-screen">
-            <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-                    
-                    <div class="flex items-center">
+
+            <!-- Header -->
+            <header style="background: #7d4a3f; box-shadow: 0 2px 8px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 10;">
+                <div style="max-width: 100%; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; height: 64px;">
+
+                    <div>
                         @isset($header)
-                            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                            <h2 style="font-size: 18px; font-weight: 700; color: white; letter-spacing: 0.5px;">
                                 {{ $header }}
                             </h2>
                         @else
-                            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                            <h2 style="font-size: 18px; font-weight: 700; color: white;">
                                 Dashboard
                             </h2>
                         @endisset
                     </div>
 
-                    <div class="flex items-center space-x-6">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+
                         @if(Auth::user()->role !== 'admin')
-                            <div x-data="{ notifOpen: false }" class="relative">
+                            <div x-data="{ notifOpen: false }" style="position: relative;">
                                 <button @click="notifOpen = !notifOpen"
-                                        class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                                    style="display: flex; align-items: center; gap: 6px; padding: 8px 14px; background: rgba(255,255,255,0.15); border: none; border-radius: 8px; cursor: pointer; color: white; font-size: 14px; transition: background 0.2s;"
+                                    onmouseover="this.style.background='rgba(255,255,255,0.25)'"
+                                    onmouseout="this.style.background='rgba(255,255,255,0.15)'">
                                     🔔
-                                    <span class="ml-2 bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">
+                                    <span style="background: white; color: #7d4a3f; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px;">
                                         {{ auth()->user()->unreadNotifications->count() }}
                                     </span>
                                 </button>
 
                                 <div x-show="notifOpen" @click.away="notifOpen = false"
-                                     class="absolute right-0 mt-2 w-[28rem] bg-white dark:bg-gray-800 shadow-lg rounded-md max-h-96 overflow-y-auto z-50">
+                                     style="position: absolute; right: 0; margin-top: 8px; width: 360px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); max-height: 380px; overflow-y: auto; z-index: 50;">
+                                    <div style="padding: 14px 16px; border-bottom: 1px solid #f3f4f6; font-size: 13px; font-weight: 700; color: #374151;">
+                                        Notifications
+                                    </div>
                                     @forelse(auth()->user()->notifications as $notification)
-                                        <div class="px-4 py-2 border-b text-sm text-gray-700 dark:text-gray-300 break-words whitespace-normal">
+                                        <div style="padding: 12px 16px; border-bottom: 1px solid #f9fafb; font-size: 13px; color: #4b5563;">
                                             {{ $notification->data['message'] }}
                                         </div>
                                     @empty
-                                        <div class="px-4 py-2 text-sm text-gray-500">No notifications yet.</div>
+                                        <div style="padding: 16px; font-size: 13px; color: #9ca3af; text-align: center;">
+                                            No notifications yet.
+                                        </div>
                                     @endforelse
                                 </div>
                             </div>
                         @endif
 
-                        <div x-data="{ open: false }" class="relative">
+                        <div x-data="{ open: false }" style="position: relative;">
                             <button @click="open = !open"
-                                    class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                                style="display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(255,255,255,0.15); border: none; border-radius: 8px; cursor: pointer; color: white; font-size: 14px; font-weight: 600; transition: background 0.2s;"
+                                onmouseover="this.style.background='rgba(255,255,255,0.25)'"
+                                onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+                                <div style="width: 28px; height: 28px; background: rgba(255,255,255,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px;">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </div>
                                 {{ Auth::user()->name }}
-                                <svg class="ml-2 h-4 w-4 fill-current" viewBox="0 0 20 20">
+                                <svg style="width: 14px; height: 14px; fill: white;" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
                                 </svg>
                             </button>
 
                             <div x-show="open" @click.away="open = false"
-                                 class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-md text-center">
-                                <a href="{{ route('profile.edit') }}" 
-                                   class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    Profile
+                                 style="position: absolute; right: 0; margin-top: 8px; width: 180px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); overflow: hidden; z-index: 50;">
+                                <a href="{{ route('profile.edit') }}"
+                                   style="display: block; padding: 12px 16px; font-size: 14px; color: #374151; text-decoration: none; transition: background 0.15s;"
+                                   onmouseover="this.style.background='#f5ede8'" onmouseout="this.style.background='white'">
+                                    👤 Profile
                                 </a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit"
-                                            class="block w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                        Log Out
+                                        style="width: 100%; text-align: left; padding: 12px 16px; font-size: 14px; color: #374151; background: transparent; border: none; cursor: pointer; transition: background 0.15s;"
+                                        onmouseover="this.style.background='#f5ede8'" onmouseout="this.style.background='transparent'">
+                                        🚪 Log Out
                                     </button>
                                 </form>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </header>

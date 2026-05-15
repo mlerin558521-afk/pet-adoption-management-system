@@ -1,32 +1,63 @@
-<nav x-data="{ open: false }" 
-     class="bg-white dark:bg-gray-800 border-r border-gray-100 dark:border-gray-700 w-80 h-screen flex flex-col justify-between relative">
+<nav x-data="{ open: false }"
+     style="background: #7d4a3f; width: 280px; min-width: 280px; height: 100vh; display: flex; flex-direction: column; justify-content: space-between; position: sticky; top: 0;">
 
-    <div class="flex flex-col flex-grow">
-        <div class="flex items-center space-x-2 p-4">
+    <!-- Logo + Title -->
+    <div>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 24px 20px; border-bottom: 1px solid rgba(255,255,255,0.15);">
             <a href="{{ route('dashboard') }}">
-                <img src="{{ asset('pams/paw.png') }}" alt="Logo" class="h-10 w-10">
+                <img src="{{ asset('pams/paw.png') }}" alt="Logo" style="width: 38px; height: 38px; filter: brightness(0) invert(1);">
             </a>
-            <span class="font-bold text-lg text-gray-800 dark:text-gray-200">
-                Pet Adoption Center
-            </span>
+            <span style="font-weight: 800; font-size: 16px; color: white; letter-spacing: 1px; text-transform: uppercase;">Pet Adoption</span>
         </div>
 
-        <div class="flex flex-col space-y-6 px-6 mt-8">
-            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="px-4 py-2">
-                {{ __('Dashboard') }}
-            </x-nav-link>
-            <x-nav-link :href="route('pets.index')" :active="request()->routeIs('pets.*')" class="px-4 py-2">
-                {{ __('Manage Pets') }}
-            </x-nav-link>
-            <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')" class="px-4 py-2">
-                {{ __('Manage Users') }}
-            </x-nav-link>
-            <x-nav-link :href="route('adoptions.index')" :active="request()->routeIs('adoptions.*')" class="px-4 py-2">
-                {{ __('Adoption Requests') }}
-            </x-nav-link>
-            <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.*')" class="px-4 py-2">
-                {{ __('Reports') }}
-            </x-nav-link>
+        <!-- Nav Links -->
+        <div style="display: flex; flex-direction: column; padding: 20px 12px; gap: 4px;">
+
+            <a href="{{ route('dashboard') }}"
+               style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; transition: background 0.2s;
+               {{ request()->routeIs('dashboard') ? 'background: rgba(255,255,255,0.2); color: white;' : 'color: rgba(255,255,255,0.75);' }}"
+               onmouseover="if(!{{ request()->routeIs('dashboard') ? 'true' : 'false' }}) this.style.background='rgba(255,255,255,0.1)'"
+               onmouseout="if(!{{ request()->routeIs('dashboard') ? 'true' : 'false' }}) this.style.background='transparent'">
+                <span style="font-size: 18px;">📊</span>
+                Dashboard
+            </a>
+
+            <a href="{{ route('pets.index') }}"
+               style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; transition: background 0.2s;
+               {{ request()->routeIs('pets.*') ? 'background: rgba(255,255,255,0.2); color: white;' : 'color: rgba(255,255,255,0.75);' }}"
+               onmouseover="if(!{{ request()->routeIs('pets.*') ? 'true' : 'false' }}) this.style.background='rgba(255,255,255,0.1)'"
+               onmouseout="if(!{{ request()->routeIs('pets.*') ? 'true' : 'false' }}) this.style.background='transparent'">
+                <span style="font-size: 18px;">🐾</span>
+                Manage Pets
+            </a>
+
+            <a href="{{ route('users.index') }}"
+               style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; transition: background 0.2s;
+               {{ request()->routeIs('users.*') ? 'background: rgba(255,255,255,0.2); color: white;' : 'color: rgba(255,255,255,0.75);' }}"
+               onmouseover="if(!{{ request()->routeIs('users.*') ? 'true' : 'false' }}) this.style.background='rgba(255,255,255,0.1)'"
+               onmouseout="if(!{{ request()->routeIs('users.*') ? 'true' : 'false' }}) this.style.background='transparent'">
+                <span style="font-size: 18px;">👤</span>
+                Manage Users
+            </a>
+
+            <a href="{{ route('adoptions.index') }}"
+               style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; transition: background 0.2s;
+               {{ request()->routeIs('adoptions.*') ? 'background: rgba(255,255,255,0.2); color: white;' : 'color: rgba(255,255,255,0.75);' }}"
+               onmouseover="if(!{{ request()->routeIs('adoptions.*') ? 'true' : 'false' }}) this.style.background='rgba(255,255,255,0.1)'"
+               onmouseout="if(!{{ request()->routeIs('adoptions.*') ? 'true' : 'false' }}) this.style.background='transparent'">
+                <span style="font-size: 18px;">📋</span>
+                Adoption Requests
+            </a>
+
+            <a href="{{ route('reports.index') }}"
+               style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; transition: background 0.2s;
+               {{ request()->routeIs('reports.*') ? 'background: rgba(255,255,255,0.2); color: white;' : 'color: rgba(255,255,255,0.75);' }}"
+               onmouseover="if(!{{ request()->routeIs('reports.*') ? 'true' : 'false' }}) this.style.background='rgba(255,255,255,0.1)'"
+               onmouseout="if(!{{ request()->routeIs('reports.*') ? 'true' : 'false' }}) this.style.background='transparent'">
+                <span style="font-size: 18px;">📊</span>
+                Reports
+            </a>
+
         </div>
     </div>
 </nav>

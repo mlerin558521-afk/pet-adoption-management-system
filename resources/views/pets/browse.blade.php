@@ -1,84 +1,152 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Browse Pets') }}
-        </h2>
-    </x-slot>
+    <x-slot name="header">{{ __('Browse Pets') }}</x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
+    <div class="py-6 px-6">
 
-                <p class="text-gray-700 dark:text-gray-300 mb-4">
-                    Find pets available for adoption below.
-                </p>
+        {{-- Top Bar --}}
+        <div style="margin-bottom: 24px;">
+            <h3 style="font-size: 20px; font-weight: 800; color: #1f2937;">Available Pets</h3>
+            <p style="font-size: 13px; color: #9ca3af; margin-top: 2px;">Find your perfect companion and apply for adoption</p>
+        </div>
 
-                <form method="GET" action="{{ route('pets.browse') }}" class="flex flex-wrap gap-3 mb-6">
-                    <input type="text" name="search" value="{{ request('search') }}"
-                           placeholder="Search by name, species, breed, or age"
-                           class="flex-1 px-3 py-2 border rounded-md text-sm focus:ring focus:ring-blue-300">
+        {{-- Filter Bar --}}
+        <form method="GET" action="{{ route('pets.browse') }}"
+              style="background: white; border-radius: 12px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 12px rgba(125,74,63,0.08); display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end;">
 
-                    <select name="species" class="px-3 py-2 border rounded-md text-sm">
-                        <option value="">All Species</option>
-                        <option value="Cat" {{ request('species')=='Cat' ? 'selected' : '' }}>Cat</option>
-                        <option value="Dog" {{ request('species')=='Dog' ? 'selected' : '' }}>Dog</option>
-                    </select>
+            <div style="flex: 1; min-width: 180px;">
+                <label style="font-size: 12px; font-weight: 600; color: #6b7280; display: block; margin-bottom: 4px;">Search</label>
+                <input type="text" name="search" value="{{ request('search') }}"
+                       placeholder="Name, species, breed..."
+                       style="width: 100%; padding: 9px 12px; border: 1.5px solid #e5e7eb; border-radius: 8px; font-size: 14px; outline: none;"
+                       onfocus="this.style.borderColor='#7d4a3f'" onblur="this.style.borderColor='#e5e7eb'">
+            </div>
 
-                    <input type="text" name="breed" value="{{ request('breed') }}"
-                           placeholder="Breed"
-                           class="px-3 py-2 border rounded-md text-sm">
+            <div style="min-width: 130px;">
+                <label style="font-size: 12px; font-weight: 600; color: #6b7280; display: block; margin-bottom: 4px;">Species</label>
+                <select name="species"
+                        style="width: 100%; padding: 9px 12px; border: 1.5px solid #e5e7eb; border-radius: 8px; font-size: 14px; outline: none; background: white;"
+                        onfocus="this.style.borderColor='#7d4a3f'" onblur="this.style.borderColor='#e5e7eb'">
+                    <option value="">All Species</option>
+                    <option value="Cat" {{ request('species')=='Cat' ? 'selected' : '' }}>Cat</option>
+                    <option value="Dog" {{ request('species')=='Dog' ? 'selected' : '' }}>Dog</option>
+                    <option value="Rabbit" {{ request('species')=='Rabbit' ? 'selected' : '' }}>Rabbit</option>
+                    <option value="Bird" {{ request('species')=='Bird' ? 'selected' : '' }}>Bird</option>
+                </select>
+            </div>
 
-                    <input type="number" name="age" value="{{ request('age') }}"
-                           placeholder="Age"
-                           class="px-3 py-2 border rounded-md text-sm">
+            <div style="min-width: 130px;">
+                <label style="font-size: 12px; font-weight: 600; color: #6b7280; display: block; margin-bottom: 4px;">Breed</label>
+                <input type="text" name="breed" value="{{ request('breed') }}"
+                       placeholder="Breed"
+                       style="width: 100%; padding: 9px 12px; border: 1.5px solid #e5e7eb; border-radius: 8px; font-size: 14px; outline: none;"
+                       onfocus="this.style.borderColor='#7d4a3f'" onblur="this.style.borderColor='#e5e7eb'">
+            </div>
 
-                    <button type="submit" class="px-3 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700">
-                        Filter
-                    </button>
-                    <a href="{{ route('pets.browse') }}" class="px-3 py-2 bg-gray-300 text-sm rounded hover:bg-gray-400">
-                        Reset
-                    </a>
-                </form>
+            <div style="min-width: 100px;">
+                <label style="font-size: 12px; font-weight: 600; color: #6b7280; display: block; margin-bottom: 4px;">Age</label>
+                <input type="number" name="age" value="{{ request('age') }}"
+                       placeholder="Age"
+                       style="width: 100%; padding: 9px 12px; border: 1.5px solid #e5e7eb; border-radius: 8px; font-size: 14px; outline: none;"
+                       onfocus="this.style.borderColor='#7d4a3f'" onblur="this.style.borderColor='#e5e7eb'">
+            </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @forelse($pets as $pet)
-                        <div class="bg-gray-50 dark:bg-gray-700 shadow rounded-lg p-4 flex flex-col items-center text-center">
-                            <img src="{{ asset('storage/' . $pet->photo) }}" 
-                                 alt="{{ $pet->name }}" 
-                                 class="w-20 h-20 object-cover rounded-full mb-3 shadow-sm">
+            <div style="display: flex; gap: 8px; align-items: flex-end;">
+                <button type="submit"
+                        style="padding: 9px 20px; background: #7d4a3f; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;"
+                        onmouseover="this.style.background='#5c332b'" onmouseout="this.style.background='#7d4a3f'">
+                    Filter
+                </button>
+                <a href="{{ route('pets.browse') }}"
+                   style="padding: 9px 20px; background: #f5ede8; color: #7d4a3f; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none;"
+                   onmouseover="this.style.background='#eedad3'" onmouseout="this.style.background='#f5ede8'">
+                    Reset
+                </a>
+            </div>
+        </form>
 
-                            <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                                {{ $pet->name }}
-                            </h3>
-                            <div class="space-y-1 text-xs text-gray-600 dark:text-gray-300">
-                                <p><strong>Species:</strong> {{ $pet->species }}</p>
-                                <p><strong>Breed:</strong> {{ $pet->breed }}</p>
-                                <p><strong>Age:</strong> {{ $pet->age }} years</p>
-                                <p><strong>Adopted:</strong> 
-                                    <span class="{{ $pet->adopted ? 'text-green-600' : 'text-red-600' }}">
-                                        {{ $pet->adopted ? 'Yes' : 'No' }}
-                                    </span>
-                                </p>
+        {{-- Pet Cards --}}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
+            @forelse($pets as $pet)
+                <div style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(125,74,63,0.08); transition: transform 0.2s, box-shadow 0.2s;"
+                     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(125,74,63,0.15)'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 12px rgba(125,74,63,0.08)'">
+
+                    {{-- Photo --}}
+                    <div style="height: 200px; background: #f5ede8; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                        @if($pet->photo)
+                            <img src="{{ asset('storage/'.$pet->photo) }}" alt="{{ $pet->name }}"
+                                 style="width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                            <div style="font-size: 48px;">🐾</div>
+                        @endif
+                    </div>
+
+                    {{-- Info --}}
+                    <div style="padding: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <h3 style="font-size: 16px; font-weight: 800; color: #1f2937;">{{ $pet->name }}</h3>
+                            <span style="font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+                                {{ $pet->adopted ? 'background: #fee2e2; color: #991b1b;' : 'background: #d1fae5; color: #065f46;' }}">
+                                {{ $pet->adopted ? 'Adopted' : 'Available' }}
+                            </span>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #6b7280; margin-bottom: 16px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Species</span>
+                                <span style="font-weight: 600; color: #374151;">{{ $pet->species }}</span>
                             </div>
-
-                            @if(!$pet->adopted)
-                                <form action="{{ route('adoptions.store') }}" method="POST" class="mt-3 w-full">
-                                    @csrf
-                                    <input type="hidden" name="pet_id" value="{{ $pet->id }}">
-                                    <button type="submit" 
-                                            class="w-full bg-blue-600 text-white px-3 py-1 text-sm rounded hover:bg-blue-700">
-                                        Apply for Adoption
-                                    </button>
-                                </form>
-                            @else
-                                <p class="mt-3 text-xs text-gray-500">Already Adopted</p>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Breed</span>
+                                <span style="font-weight: 600; color: #374151;">{{ $pet->breed }}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Gender</span>
+                                <span style="font-weight: 600; color: #374151;">{{ $pet->gender }}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Age</span>
+                                <span style="font-weight: 600; color: #374151;">{{ $pet->age }} yrs</span>
+                            </div>
+                            @if($pet->characteristics)
+                                <div style="margin-top: 4px;">
+                                    <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px;">
+                                        @foreach(explode(',', $pet->characteristics) as $trait)
+                                            <span style="background: #f5ede8; color: #7d4a3f; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;">
+                                                {{ trim($trait) }}
+                                            </span>
+                                        @endforeach
+                                    </div>
+                                </div>
                             @endif
                         </div>
-                    @empty
-                        <p class="text-gray-600 dark:text-gray-400">No pets available right now.</p>
-                    @endforelse
+
+                        {{-- Action --}}
+                        @if(!$pet->adopted)
+                            <form action="{{ route('adoptions.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="pet_id" value="{{ $pet->id }}">
+                                <button type="submit"
+                                        style="width: 100%; padding: 10px; background: #7d4a3f; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;"
+                                        onmouseover="this.style.background='#5c332b'" onmouseout="this.style.background='#7d4a3f'">
+                                    🐾 Apply for Adoption
+                                </button>
+                            </form>
+                        @else
+                            <div style="width: 100%; padding: 10px; background: #f3f4f6; color: #9ca3af; border-radius: 8px; font-size: 14px; font-weight: 600; text-align: center;">
+                                Already Adopted
+                            </div>
+                        @endif
+                    </div>
                 </div>
-            </div>
+            @empty
+                <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #9ca3af;">
+                    <div style="font-size: 48px; margin-bottom: 12px;">🐾</div>
+                    <p style="font-size: 16px; font-weight: 600;">No pets available right now</p>
+                    <p style="font-size: 14px; margin-top: 4px;">Check back soon for new arrivals!</p>
+                </div>
+            @endforelse
         </div>
+
     </div>
 </x-app-layout>
