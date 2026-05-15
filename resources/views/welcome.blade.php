@@ -27,9 +27,12 @@
         </div>
     </header>
 
-    <main class="flex-1 flex items-center justify-center p-8 bg-gradient-to-r from-pink-100 via-yellow-100 to-indigo-100">
-        <div class="text-center max-w-2xl">
-            <h1 class="text-5xl font-extrabold text-gray-900 mb-6">
+    <!-- Main section with background image -->
+    <main style="flex: 1; display: flex; align-items: center; justify-content: flex-start; padding: 32px; 
+                 background: url('{{ asset('pams/background.png') }}') no-repeat center center; 
+                 background-size: cover;">
+        <div style="max-width: 700px; background: rgba(255,255,255,0.7); padding: 32px; border-radius: 8px; text-align: left; margin-left: 48px;">
+            <h1 style="font-size: 48px; font-weight: 800; color: #111827; margin-bottom: 24px;">
                 Find Your New Best Friend 🐾
             </h1>
             <p class="text-xl text-gray-700 mb-4">
