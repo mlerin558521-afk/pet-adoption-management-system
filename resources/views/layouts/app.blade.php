@@ -20,7 +20,6 @@
 
         <div class="flex-1 min-h-screen">
 
-            <!-- Header -->
             <header style="background: #7d4a3f; box-shadow: 0 2px 8px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 10;">
                 <div style="max-width: 100%; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; height: 64px;">
 
