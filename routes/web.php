@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
-    return redirect('welcome');
-})->name('home');
+    return view('/products');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
